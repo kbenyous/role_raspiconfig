@@ -1,0 +1,34 @@
+---
+
+- name: Generate locale
+  locale_gen: name=fr_FR.UTF-8 state=present
+  become: true
+  notify: Update system with new locale
+
+- name: Set default locale
+  copy:
+    content: |
+      LANG=fr_FR.UTF-8
+
+    dest: /etc/default/locale
+  become: true
+  notify: Update system with new locale
+
+- name: Set timezone variables
+  copy:
+    content: |
+      Europe/Paris
+      
+    dest: /etc/timezone
+  become: true
+  notify: Update system with new timezone
+
+- name: Change keyboard layout
+  lineinfile: dest=/etc/default/keyboard regexp=^XKBLAYOUT= line=XKBLAYOUT="fr"
+  become: true
+  notify: Update system with new keyboard layout
+
+- name: Change country for wifi authorized channels
+  lineinfile: dest=/etc/wpa_supplicant/wpa_supplicant.conf regexp=^country= line=country="fr"
+  become: true
+

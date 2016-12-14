@@ -1,0 +1,23 @@
+---
+
+#- name: Get hostname of the target
+#  shell:  cat /etc/hostname | tr -d " \t\n\r"
+#  register: role_raspiconfig_previous_hostname
+#  changed_when: false
+
+- name: Set hostname
+  copy:
+    dest: /etc/hostname
+    content: "{{ansible_hostname}}"
+  become: true
+  notify:
+  - Reboot
+
+- name: Set known hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^127\.0\.1\.1'
+    line: "127.0.1.1 {{ansible_hostname}}"
+  become: true
+  notify:
+  - Reboot

@@ -1,0 +1,13 @@
+---
+# configuration du wifi
+# onfiguration clavier
+# expand rootfs
+
+# reboot
+
+
+- include: i18n.yml
+
+- include: hostname.yml
+- include: update.yml
+#{{inventory_hostname}}

@@ -1,0 +1,16 @@
+---
+
+- name: Update system with new timezone
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+  become: true
+
+- name: Update system with new locale
+  command: dpkg-reconfigure --frontend noninteractive locales
+  become: true
+
+- name: Update system with new keyboard layout
+  command: dpkg-reconfigure --frontend noninteractive keyboard-configuration
+  become: true
+
+- name: Reboot
+  include: reboot.yml
